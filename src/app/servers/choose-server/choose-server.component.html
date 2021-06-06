@@ -1,0 +1,110 @@
+<div nz-row>
+    <div nz-col nzSpan="1"></div>
+    <div nz-col nzSpan="6">
+        <div class="server-storage-slider">
+            <div class="i-label">
+                Choose Server Storage (In MB)
+            </div>
+            <br>
+            <nz-slider [nzTipFormatter]="formatter" nzRange [(ngModel)]="serverStorageRange" [nzStep]="10" [nzMin]="250" [nzMax]="44000"
+                [nzDisabled]="loading" [(ngModel)]="serverStorageRange"></nz-slider>
+        </div>
+    </div>
+    <div nz-col nzSpan="6">
+        <div class="i-div">
+            <div class="i-label">
+                Choose Server RAM
+            </div>
+            <br>
+            <nz-checkbox-group [(ngModel)]="ramOptionsOne" [nzDisabled]="loading"></nz-checkbox-group>
+        </div>
+    </div>
+    <div nz-col nzSpan="6">
+        <div class="i-div">
+            <div class="i-label">
+                Choose HDD type
+            </div>
+            <br>
+            <nz-select style="min-width: 200px;" [(ngModel)]="hddTypesSelected" nzMode="multiple"
+                nzPlaceHolder="Please select HDD type" [nzDisabled]="loading">
+                <nz-option *ngFor="let option of hddTypes" [nzLabel]="option.label" [nzValue]="option.value">
+                </nz-option>
+            </nz-select>
+        </div>
+    </div>
+    <div nz-col nzSpan="3">
+        <div class="i-label">
+            Choose Location
+        </div>
+        <br>
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a location" [(ngModel)]="selectedServerLocation"
+            [nzDisabled]="loading">
+            <nz-option nzLabel="AmsterdamAMS-01" nzValue="AmsterdamAMS-01"></nz-option>
+            <nz-option nzLabel="Washington D.C.WDC-01" nzValue="Washington D.C.WDC-01"></nz-option>
+            <nz-option nzLabel="San FranciscoSFO-12" nzValue="San FranciscoSFO-12"></nz-option>
+            <nz-option nzLabel="SingaporeSIN-11" nzValue="SingaporeSIN-11"></nz-option>
+            <nz-option nzLabel="DallasDAL-10" nzValue="DallasDAL-10"></nz-option>
+            <nz-option nzLabel="FrankfurtFRA-10" nzValue="FrankfurtFRA-10"></nz-option>
+            <nz-option nzLabel="Hong KongHKG-10" nzValue="Hong KongHKG-10"></nz-option>
+        </nz-select>
+    </div>
+    <div nz-col nzSpan="1"></div>
+</div>
+<br>
+<br>
+<div nz-row>
+    <div nz-col nzSpan="20"></div>
+    <div nz-col nzSpan="3">
+        <div class="search-button">
+            <button nz-button nzType="primary" (click)="searchServers()" [nzLoading]="loading">Search</button>
+        </div>
+    </div>
+    <div nz-col nzSpan="1"></div>
+</div>
+<br><br>
+<div nz-row>
+    <div nz-col nzSpan="1"></div>
+    <div nz-col nzSpan="22">
+        <nz-table #groupingTable #rowSelectionTable nzShowPagination nzShowSizeChanger [nzData]="listOfServers"
+            nzBordered nzSize="middle" (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+            [nzLoading]="loading">
+            <thead>
+                <tr>
+                    <th rowspan="4" [nzChecked]="checked" [nzIndeterminate]="indeterminate"
+                        (nzCheckedChange)="onAllServersChecked($event)"></th>
+                    <th rowspan="4">Model</th>
+                    <th colspan="3">Ram</th>
+                    <th colspan="4">HDD</th>
+                    <th rowspan="4">Location</th>
+                    <th rowspan="4">Price</th>
+                </tr>
+                <tr>
+                    <th rowspan="3">Memory</th>
+                    <th rowspan="3">Unit</th>
+                    <th rowspan="3">Type</th>
+                    <th rowspan="3">Memory</th>
+                    <th rowspan="3">Unit</th>
+                    <th rowspan="3">Type</th>
+                    <th rowspan="3">Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of rowSelectionTable.data">
+                    <td [nzChecked]="setOfCheckedServers.has(data)" [nzDisabled]="false"
+                        (nzCheckedChange)="onServerChecked(data, $event)"></td>
+                    <td>{{ data.model }}</td>
+                    <td>{{ data.ram.memory }}</td>
+                    <td>{{ data.ram.unit }}</td>
+                    <td>{{ data.ram.type }}</td>
+                    <td>{{ data.hdd.memory }}</td>
+                    <td>{{ data.hdd.unit }}</td>
+                    <td>{{ data.hdd.type }}</td>
+                    <td>{{ data.hdd.count }}</td>
+                    <td>{{ data.location }}</td>
+                    <td>{{ data.price.amountCents }} {{ data.price.currencySymbol }}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+    <div nz-col nzSpan="1"></div>
+</div>
