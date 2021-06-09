@@ -1,16 +1,19 @@
 <div nz-row>
     <div nz-col nzSpan="1"></div>
-    <div nz-col nzSpan="6">
+    <div nz-col nzSpan="8">
         <div class="server-storage-slider">
             <div class="i-label">
-                Choose Server Storage (In MB)
+                Choose Server Storage
             </div>
             <br>
-            <nz-slider [nzTipFormatter]="formatter" nzRange [(ngModel)]="serverStorageRange" [nzStep]="10" [nzMin]="250" [nzMax]="44000"
-                [nzDisabled]="loading" [(ngModel)]="serverStorageRange"></nz-slider>
+            <div class="slider-div">
+                <nz-slider [nzMarks]="storageMarks" [nzTipFormatter]="formatter" nzRange
+                    [(ngModel)]="serverStorageRange" [nzStep]="10" [nzMin]="250" [nzMax]="72000" [nzDisabled]="loading"
+                    [(ngModel)]="serverStorageRange"></nz-slider>
+            </div>
         </div>
     </div>
-    <div nz-col nzSpan="6">
+    <div nz-col nzSpan="5">
         <div class="i-div">
             <div class="i-label">
                 Choose Server RAM
@@ -19,7 +22,7 @@
             <nz-checkbox-group [(ngModel)]="ramOptionsOne" [nzDisabled]="loading"></nz-checkbox-group>
         </div>
     </div>
-    <div nz-col nzSpan="6">
+    <div nz-col nzSpan="5">
         <div class="i-div">
             <div class="i-label">
                 Choose HDD type
@@ -67,7 +70,7 @@
     <div nz-col nzSpan="22">
         <nz-table #groupingTable #rowSelectionTable nzShowPagination nzShowSizeChanger [nzData]="listOfServers"
             nzBordered nzSize="middle" (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
-            [nzLoading]="loading">
+            [nzLoading]="loading" [nzTitle]="getTableTitle()">
             <thead>
                 <tr>
                     <th rowspan="4" [nzChecked]="checked" [nzIndeterminate]="indeterminate"

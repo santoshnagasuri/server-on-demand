@@ -1,7 +1,3 @@
-.server-storage-slider {
-    /* width: 200px; */
-}
-
 .i-label {
     padding: 1%;
     font-weight: bold;
@@ -13,4 +9,8 @@
 
 .search-button {
    float: right;
+}
+
+.slider-div {
+    padding-right: 15px;
 }

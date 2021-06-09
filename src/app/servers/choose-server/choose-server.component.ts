@@ -19,7 +19,8 @@ export class ChooseServerComponent implements OnInit {
   listOfSelectedServers: Server[] = [];
   setOfCheckedServers = new Set<Server>();
   loading = false;
-  serverStorageRange = [250, 44000];
+  serverStorageRange = [0, 72000];
+  totalNumberOfServers: number = 0;
   ramOptionsOne = [
     { label: '2GB ', value: '2', checked: true },
     { label: '4GB ', value: '4', checked: true },
@@ -40,6 +41,17 @@ export class ChooseServerComponent implements OnInit {
   hddTypesSelected = [];
   size: NzSelectSizeType = 'large';
   selectedServerLocation!: string;
+  storageMarks = {
+    0: '0TB',
+    1000: '1TB',
+    10000: '10TB',
+    20000: '20TB',
+    30000: '30TB',
+    40000: '40TB',
+    50000: '50TB',
+    60000: '60TB',
+    72000: '72TB',
+  };
 
 
 
@@ -47,13 +59,8 @@ export class ChooseServerComponent implements OnInit {
     this.loading = true;
     this.chooseServerService.getAllServers().subscribe(
       data => {
-        console.log(data);
         this.listOfServers = data.servers;
-        let u = new Set<String>();
-        this.listOfServers.forEach(
-          s => { u.add(s.location) }
-        );
-        console.log(u)
+        this.totalNumberOfServers = this.listOfServers.length;
         this.loading = false;
       }
     )
@@ -80,19 +87,24 @@ export class ChooseServerComponent implements OnInit {
   searchServers() {
     this.loading = true;
     let ram = this.ramOptionsOne.filter(r => r.checked).map(u => u.value).join(",");
-    console.log(ram);
     let storageMin = this.serverStorageRange[0];
     let storageMax = this.serverStorageRange[1];
     let hdd = this.hddTypesSelected.join(",");
     this.chooseServerService.searchServers(storageMin, storageMax, ram, hdd, this.selectedServerLocation).subscribe(
       data => {
         this.listOfServers = data.servers;
+        this.totalNumberOfServers = this.listOfServers.length;
         this.loading = false;
       }
     )
   }
 
   formatter(value: number): string {
-    return `${value}MB`;
+    let tbNum = value / 1000;
+    return `${tbNum}TB`;
+  }
+
+  getTableTitle() {
+    return `${this.totalNumberOfServers} servers available`
   }
 }
