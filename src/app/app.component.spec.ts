@@ -26,10 +26,4 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('server-on-demand');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('server-on-demand app is running!');
-  });
 });
