@@ -6,8 +6,8 @@ describe('IntroComponent', () => {
   let component: IntroComponent;
   let fixture: ComponentFixture<IntroComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       declarations: [ IntroComponent ]
     })
     .compileComponents();

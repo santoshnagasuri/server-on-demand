@@ -38,7 +38,7 @@ export class ChooseServerComponent implements OnInit {
     { label: 'SATA', value: 'SATA' },
     { label: 'SSD', value: 'SSD' },
   ];
-  hddTypesSelected = [];
+  hddTypesSelected: string[] = [];
   size: NzSelectSizeType = 'large';
   selectedServerLocation!: string;
   storageMarks = {
@@ -57,13 +57,17 @@ export class ChooseServerComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
+    this.getAllServersOnLoad();
+  }
+
+  getAllServersOnLoad() {
     this.chooseServerService.getAllServers().subscribe(
       data => {
         this.listOfServers = data.servers;
         this.totalNumberOfServers = this.listOfServers.length;
         this.loading = false;
       }
-    )
+    );
   }
 
   onCurrentPageDataChange(listOfCurrentPageData: ReadonlyArray<Server>): void {
